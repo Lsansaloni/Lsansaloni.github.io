@@ -4,7 +4,8 @@ import Layout from '../layouts/Layout.astro';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
-<Layout title="About — LluckyGames">
+<Layout title="About — LluckyGames" wide>
+  <div class="text-column">
   <h1>About</h1>
 
   <p>
@@ -63,5 +64,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   <div class="btn-row">
     <a class="btn" href={`${base}/contact/`}>Get in touch</a>
     <a class="btn ghost" href={`${base}/writing/`}>Read the essays</a>
+  </div>
   </div>
 </Layout>
