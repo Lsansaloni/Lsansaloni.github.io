@@ -13,7 +13,6 @@
         --muted: #93a8a3;
         --accent: #00e68a;
         --danger: #ff6b6b;
-        --mana: #60a5fa;
       }
       * { box-sizing: border-box; }
       body {
@@ -43,12 +42,10 @@
         padding: 0.8rem;
       }
       .fighter h2 { font-size: 0.85rem; margin: 0 0 0.5rem; color: var(--muted); font-weight: 500; }
-      .bar-label { display: flex; justify-content: space-between; font-size: 0.75rem; margin: 0.35rem 0 0.15rem; }
-      .bar { height: 10px; background: #1c2725; border-radius: 5px; overflow: hidden; }
-      .bar > div { height: 100%; transition: width 0.35s ease; }
-      .hp > div { background: var(--accent); }
-      .hp.low > div { background: var(--danger); }
-      .mana > div { background: var(--mana); }
+      .score { display: flex; align-items: center; gap: 1px; font-size: 1.25rem; line-height: 1; }
+      .score .pip { color: #22332f; }
+      .score .pip.on { color: var(--accent); }
+      .score .count { font-size: 0.72rem; color: var(--muted); letter-spacing: normal; margin-left: 0.5rem; }
       .log {
         width: 100%;
         max-width: 560px;
@@ -83,13 +80,11 @@
       }
       button:hover:not(:disabled) { border-color: var(--accent); }
       button:disabled { opacity: 0.35; cursor: not-allowed; }
-      button .cost { color: var(--mana); font-size: 0.75rem; margin-left: 0.3rem; }
       button.primary { border-color: var(--accent); }
       .meta { font-size: 0.75rem; color: var(--muted); margin: 0.3rem 0; }
-      .result { font-size: 1rem; font-weight: 600; margin: 0.5rem 0; text-align: center; min-height: 1.4rem; }
+      .result { font-size: 1.35rem; font-weight: 700; letter-spacing: 0.08em; margin: 0.6rem 0; text-align: center; min-height: 1.6rem; }
       .result.win { color: var(--accent); }
       .result.lose { color: var(--danger); }
-      .result.draw { color: var(--muted); }
     </style>
   </head>
   <body>

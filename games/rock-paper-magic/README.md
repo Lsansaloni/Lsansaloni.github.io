@@ -1,8 +1,8 @@
 # Rock Paper Magic
 
-A combat resolver built on the rock-paper-scissors counter triangle — HP,
-mana, spells, and an AI you can learn to read. A prototype on purpose: no
-menus, no art, color + text + numbers.
+Five-way rock-paper-scissors (RPSLS) — five moves, first to three rounds,
+and an AI you can learn to read. A prototype on purpose: no menus, no art,
+color + text + words.
 
 ## Run it
 
@@ -13,38 +13,35 @@ npm run dev
 
 ## The model
 
-Both sides commit an action simultaneously each round. Each action produces
-an effect against the other's action:
+Both sides commit a move simultaneously each round. Every move beats exactly
+two others and loses to exactly two:
 
-| You \ Rival | Strike | Feint | Guard | Fireball | Drain |
-| --- | --- | --- | --- | --- | --- |
-| **Strike** | 0 | 12 | 0 | 0 | 0 |
-| **Feint** | 0 | 0 | 10 | 0 | 0 |
-| **Guard** | 8 | 0 | 0 | 0 | 0 |
-| **Fireball** | 15 | 15 | 15 | 15 | 15 |
-| **Drain** | 7 | 7 | 7 | 7 | 7 |
+| Move | Beats |
+| --- | --- |
+| **Rock** | Scissors (crushes), Lizard (crushes) |
+| **Paper** | Rock (covers), Spock (disproves) |
+| **Scissors** | Paper (cuts), Lizard (decapitates) |
+| **Lizard** | Paper (eats), Spock (poisons) |
+| **Spock** | Scissors (smashes), Rock (vaporizes) |
 
-- Basics are free and follow the triangle (`strike > feint > guard > strike`).
-- Spells are flat, ignore the triangle, and cost mana (Fireball 3 → 15 dmg,
-  Drain 2 → 7 dmg + 7 self-heal).
-- Mana: starts at 2, +1 per round, max 5.
-- First to 0 HP loses; 10-round cap, higher HP wins.
+- Same move twice → tie: replay, no point.
+- Win the round → one point. First to **3** points → `WINNER` (max 5 rounds).
+- Three rival AIs you're supposed to *learn*: Drifter (noise), Mimic (beats
+  your last throw — never repeat), Hunter (counters your habits — randomize).
 
-**The design bet:** pure RPS is luck with extra steps. Add a resource
-(mana) with slow regen and asymmetric costs, and the same three counters
-become a tempo game — spend now for guaranteed damage, or save and try to
-read the rival. The three AI difficulties exist so the player has something
-to *learn*: Drifter (noise), Mimic (rotation), Hunter (adapts to your
-habits — randomize).
+**The design bet:** pure three-way RPS is luck with extra steps. Five moves
+widen the read space, and a first-to-three match lets a good read compound
+across rounds instead of evaporating in one throw. The throw is luck; the
+match isn't.
 
 ## Balance levers
 
-All numbers live at the top of `src/game.ts` (`BASIC_MATRIX`,
-`FIREBALL_DMG`, `DRAIN_*`, `MANA_*`). That table is the whole design doc —
-edit it and the game rebalances.
+The counter table lives at the top of `src/game.ts` (`MOVE_DEFS`) — verbs,
+matchups, everything. The AI dispositions live in `src/ai.ts`
+(`BEATS_BY`, `DIFFICULTY_LABELS`). Edit either and the game rebalances.
 
 ## Scope notes
 
-Deliberately out of scope: menus, art, sound, online play, best-of-N
-series. This exists to answer one question in under a minute of play. If it
-earns a Phase 3+, it graduates to its own repo.
+Deliberately out of scope: menus, art, sound, online play. This exists to
+answer one question in under a minute of play. If it earns a Phase 3+, it
+graduates to its own repo.

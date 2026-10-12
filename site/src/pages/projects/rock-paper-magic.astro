@@ -6,14 +6,14 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 <Layout
   title="Rock Paper Magic — LluckyGames"
-  description="A combat resolver built on the rock-paper-scissors counter triangle: HP, mana, spells, and an AI you can learn to read."
+  description="Five-way rock-paper-scissors with a first-to-three match structure and an AI whose patterns you can learn to read."
 >
   <article class="prose">
     <header>
       <p class="faint"><a href={`${base}/projects/`}>← Projects</a></p>
       <h1>Rock Paper Magic</h1>
       <p class="muted">
-        Rock-paper-scissors, but every choice has a price and a consequence.
+        Five moves, each beats two and loses to two. First to three rounds.
       </p>
       <p><span class="pill in-progress">In progress</span></p>
     </header>
@@ -26,42 +26,41 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
       ></iframe>
     </div>
     <p class="faint" style="font-size:0.82rem;margin-top:-0.75rem">
-      Pick an action each round. Basics are free and counter each other;
-      spells cost mana and hit flat. First to 0 HP loses — 10-round cap.
-      Try reading the Mimic, then survive the Hunter.
+      Pick a move each round — ties replay and score nothing. First to 3 round
+      wins takes the match. Try reading the Mimic, then survive the Hunter.
     </p>
 
     <h2>The design question</h2>
     <p>
-      Pure rock-paper-scissors is a solved, luck-dominated game — there's no
-      skill expression beyond guessing. But add <strong>resources</strong> (HP,
-      mana) and <strong>asymmetric costs</strong> (a spell is stronger than a
-      basic strike but costs mana you regenerate slowly), and the same three
-      counters become a bluffing game with tempo. When do I spend mana? Can I
-      read their pattern before they read mine?
+      Rock-paper-scissors is the oldest solved game there is: pure guessing,
+      no skill beyond luck. This prototype asks what the <em>minimum</em>
+      change is that makes it worth playing twice. Five options instead of
+      three (every move wins against two and loses to two, so the read space
+      is richer), a short match structure (first to three, so one good read
+      compounds across rounds instead of evaporating), and three rival AIs
+      you're supposed to figure out. The throw is still luck. The match
+      isn't.
     </p>
 
     <h2>Core loop</h2>
     <ul>
-      <li>Both sides pick an action <em>simultaneously</em> each round.</li>
+      <li>Both sides pick a move <em>simultaneously</em> each round.</li>
       <li>
-        Three basics — <strong>Strike</strong>, <strong>Guard</strong>,
-        <strong>Feint</strong> — in the classic counter triangle, free to play.
+        Five moves — <strong>Rock</strong>, <strong>Paper</strong>,
+        <strong>Scissors</strong>, <strong>Lizard</strong>,
+        <strong>Spock</strong> — each beats two, loses to two.
       </li>
-      <li>
-        Two spells with mana costs that break or bend the triangle (e.g. a
-        pierce that ignores Guard, a drain that trades damage for mana).
-      </li>
-      <li>Win the exchange → deal damage. Both survive → mana regenerates.</li>
-      <li>First to zero HP loses. Best-of-5 rounds keeps sessions short.</li>
+      <li>Win the round → one point. Tie → replay, no point.</li>
+      <li>First to 3 points → <strong>WINNER</strong>. Maximum five rounds.</li>
+      <li>Switch rivals mid-match: Drifter (noise), Mimic (counters your last throw), Hunter (reads your habits).</li>
     </ul>
 
     <h2>Scope (deliberately tiny)</h2>
     <p>
-      This is a <em>combat resolver</em>, not an RPG. No menus, no art — color,
-      text, numbers. The AI has three difficulty behaviors (random, patterned,
-      adaptive) precisely so the player can <em>learn to read it</em>: that
-      readable progression is the actual product.
+      No menus, no art — color, text, words. The three AI behaviors exist
+      precisely so the player can <em>learn to read them</em>: that readable
+      progression is the actual product. The rest is a bet on how much game
+      you can get from five words and a counter table.
     </p>
 
     <h2>Where it lives</h2>

@@ -1,131 +1,100 @@
-// Pure combat logic — no DOM, no timers. The damage matrix is the design
-// document: edit these numbers and the whole game rebalances.
+// Pure round logic — no DOM, no timers. The counter table is the design
+// document: edit these rows and the whole game rebalances.
 //
-// Model: both sides commit simultaneously. Each action independently
-// produces an effect against the other's action:
-//   - basics follow the strike > feint > guard > strike triangle
-//   - spells are flat damage, ignoring the triangle (cost mana)
+// Five-way rock-paper-scissors (RPSLS): every move beats exactly two others
+// and loses to exactly two. Both sides commit simultaneously; the match is
+// first to 3 round wins, ties replay.
 
-export type BasicAction = 'strike' | 'feint' | 'guard';
-export type SpellAction = 'fireball' | 'drain';
-export type Action = BasicAction | SpellAction;
+export type Move = 'rock' | 'paper' | 'scissors' | 'lizard' | 'spock';
 
-export const BASIC_ACTIONS: BasicAction[] = ['strike', 'feint', 'guard'];
-export const ALL_ACTIONS: Action[] = ['strike', 'feint', 'guard', 'fireball', 'drain'];
+export const MOVES: Move[] = ['rock', 'paper', 'scissors', 'lizard', 'spock'];
 
-export interface ActionDef {
+export interface Beats {
+  move: Move;
+  verb: string;
+}
+
+export interface MoveDef {
   label: string;
-  manaCost: number;
-  description: string;
+  beats: Beats[];
 }
 
-export const ACTION_DEFS: Record<Action, ActionDef> = {
-  strike: { label: 'Strike', manaCost: 0, description: 'Beats Feint. 12 dmg.' },
-  feint: { label: 'Feint', manaCost: 0, description: 'Beats Guard. 10 dmg.' },
-  guard: { label: 'Guard', manaCost: 0, description: 'Beats Strike. 8 dmg.' },
-  fireball: { label: 'Fireball', manaCost: 3, description: 'Flat 15 dmg. Ignores the triangle.' },
-  drain: { label: 'Drain', manaCost: 2, description: '7 dmg, 7 self-heal.' },
+export const MOVE_DEFS: Record<Move, MoveDef> = {
+  rock: {
+    label: 'Rock',
+    beats: [
+      { move: 'scissors', verb: 'crushes' },
+      { move: 'lizard', verb: 'crushes' },
+    ],
+  },
+  paper: {
+    label: 'Paper',
+    beats: [
+      { move: 'rock', verb: 'covers' },
+      { move: 'spock', verb: 'disproves' },
+    ],
+  },
+  scissors: {
+    label: 'Scissors',
+    beats: [
+      { move: 'paper', verb: 'cuts' },
+      { move: 'lizard', verb: 'decapitates' },
+    ],
+  },
+  lizard: {
+    label: 'Lizard',
+    beats: [
+      { move: 'paper', verb: 'eats' },
+      { move: 'spock', verb: 'poisons' },
+    ],
+  },
+  spock: {
+    label: 'Spock',
+    beats: [
+      { move: 'scissors', verb: 'smashes' },
+      { move: 'rock', verb: 'vaporizes' },
+    ],
+  },
 };
 
-export const FIREBALL_DMG = 15;
-export const DRAIN_DMG = 7;
-export const DRAIN_HEAL = 7;
+export const WINS_NEEDED = 3;
+export const MATCH_ROUNDS = WINS_NEEDED * 2 - 1;
 
-export const MANA_MAX = 5;
-export const MANA_START = 2;
-export const MANA_REGEN = 1;
-export const HP_MAX = 100;
-export const ROUND_CAP = 10;
+export type RoundOutcome = 'win' | 'lose' | 'tie';
 
-export interface Fighter {
-  hp: number;
-  mana: number;
+export interface RoundResult {
+  outcome: RoundOutcome;
+  text: string;
 }
 
-export function makeFighter(): Fighter {
-  return { hp: HP_MAX, mana: MANA_START };
+function phrase(winner: Move, loser: Move): string {
+  const hit = MOVE_DEFS[winner].beats.find((b) => b.move === loser)!;
+  return `${MOVE_DEFS[winner].label} ${hit.verb} ${MOVE_DEFS[loser].label}`;
 }
 
-/** Damage dealt by `attacker`'s action against `defender`'s action. */
-const BASIC_MATRIX: Record<BasicAction, Record<BasicAction, number>> = {
-  strike: { strike: 0, feint: 12, guard: 0 },
-  feint: { strike: 0, feint: 0, guard: 10 },
-  guard: { strike: 8, feint: 0, guard: 0 },
-};
-
-function effectDamage(attacker: Action, defender: Action): number {
-  if (attacker === 'fireball') return FIREBALL_DMG;
-  if (attacker === 'drain') return DRAIN_DMG;
-  // basic vs a spell: the caster's action has no triangle slot — whiff.
-  if (defender === 'fireball' || defender === 'drain') return 0;
-  return BASIC_MATRIX[attacker][defender];
-}
-
-export interface ExchangeResult {
-  damageToAI: number;
-  damageToPlayer: number;
-  healAI: number;
-  healPlayer: number;
-  eventText: string;
-}
-
-export function canPlay(action: Action, fighter: Fighter): boolean {
-  return fighter.mana >= ACTION_DEFS[action].manaCost;
-}
-
-export function affordableActions(fighter: Fighter): Action[] {
-  return ALL_ACTIONS.filter((a) => canPlay(a, fighter));
-}
-
-export function resolveExchange(playerAction: Action, aiAction: Action): ExchangeResult {
-  const damageToAI = effectDamage(playerAction, aiAction);
-  const damageToPlayer = effectDamage(aiAction, playerAction);
-  const healPlayer = playerAction === 'drain' ? DRAIN_HEAL : 0;
-  const healAI = aiAction === 'drain' ? DRAIN_HEAL : 0;
-
+export function resolveRound(player: Move, ai: Move): RoundResult {
+  if (player === ai) {
+    return {
+      outcome: 'tie',
+      text: `Tie — both played ${MOVE_DEFS[player].label}.`,
+    };
+  }
+  if (MOVE_DEFS[player].beats.some((b) => b.move === ai)) {
+    return {
+      outcome: 'win',
+      text: `${phrase(player, ai)} — you take the round.`,
+    };
+  }
   return {
-    damageToAI,
-    damageToPlayer,
-    healAI,
-    healPlayer,
-    eventText: describe(playerAction, aiAction, damageToAI, damageToPlayer),
+    outcome: 'lose',
+    text: `${phrase(ai, player)} — rival takes the round.`,
   };
 }
 
-function describe(p: Action, a: Action, dmgToAI: number, dmgToPlayer: number): string {
-  const label = (x: Action) => ACTION_DEFS[x].label;
-  if (dmgToAI > 0 && dmgToPlayer > 0) return `${label(p)} vs ${label(a)} — both connect!`;
-  if (dmgToAI > 0) return `${label(p)} beats ${label(a)} — ${dmgToAI} dmg.`;
-  if (dmgToPlayer > 0) return `${label(a)} beats ${label(p)} — ${dmgToPlayer} dmg.`;
-  return `${label(p)} vs ${label(a)} — nothing lands.`;
-}
+export type MatchState = 'playing' | 'won' | 'lost';
 
-export function regenMana(fighter: Fighter): Fighter {
-  return { ...fighter, mana: Math.min(MANA_MAX, fighter.mana + MANA_REGEN) };
-}
-
-export function spendMana(fighter: Fighter, action: Action): Fighter {
-  return { ...fighter, mana: fighter.mana - ACTION_DEFS[action].manaCost };
-}
-
-export function applyDamage(fighter: Fighter, damage: number): Fighter {
-  return { ...fighter, hp: Math.max(0, fighter.hp - damage) };
-}
-
-export function applyHeal(fighter: Fighter, heal: number): Fighter {
-  return { ...fighter, hp: Math.min(HP_MAX, fighter.hp + heal) };
-}
-
-export type MatchState = 'playing' | 'won' | 'lost' | 'draw';
-
-export function matchOutcome(player: Fighter, ai: Fighter, round: number): MatchState {
-  if (player.hp <= 0 && ai.hp <= 0) return 'draw';
-  if (ai.hp <= 0) return 'won';
-  if (player.hp <= 0) return 'lost';
-  if (round >= ROUND_CAP) {
-    if (player.hp > ai.hp) return 'won';
-    if (ai.hp > player.hp) return 'lost';
-    return 'draw';
-  }
+export function matchState(playerWins: number, aiWins: number): MatchState {
+  if (playerWins >= WINS_NEEDED) return 'won';
+  if (aiWins >= WINS_NEEDED) return 'lost';
   return 'playing';
 }

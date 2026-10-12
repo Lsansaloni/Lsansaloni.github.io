@@ -10,7 +10,7 @@ apart and built from scratch.
 | Path | What |
 | --- | --- |
 | `site/` | The portfolio website — Astro + MDX, static, deployed to GitHub Pages |
-| `games/rock-paper-magic/` | Playable prototype: RPS combat resolver (Vite + TypeScript, no engine) |
+| `games/rock-paper-magic/` | Playable prototype: five-way RPS, first to 3 rounds (Vite + TypeScript, no engine) |
 | `.github/workflows/` | CI: builds the site and deploys to GitHub Pages on push to `main` |
 
 ## Site
