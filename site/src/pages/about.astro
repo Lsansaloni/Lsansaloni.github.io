@@ -1,0 +1,67 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<Layout title="About — LluckyGames">
+  <h1>About</h1>
+
+  <p>
+    I'm <strong>Lluc Sansaloni</strong> — a systems person with a games heart,
+    based in Munich. By day I've spent five years keeping production systems
+    alive (Linux, Windows, Azure, automation); by training I'm a video game
+    designer (Grado Superior in 3D Animation &amp; Video Games, LADAT).
+    LluckyGames is where those two halves meet.
+  </p>
+
+  <h2>Why this site exists</h2>
+  <p>
+    Most portfolios show <em>what</em> someone made. This one also shows
+    <em>how they think</em> about the systems players actually live inside —
+    the economies of live-service games, where a misaligned currency bundle is
+    a design decision with a number attached.
+  </p>
+  <p>Two tracks:</p>
+  <ul>
+    <li>
+      <strong>Writing</strong> — taking live-service economies apart with real
+      data (Riot's RP pricing, the WoW Token, Warframe's platinum market), and
+      ending every essay with what I'd design differently.
+    </li>
+    <li>
+      <strong>Prototypes</strong> — small playable builds that isolate one
+      system each. First up: a rock-paper-scissors combat resolver with HP,
+      mana and a readable AI.
+    </li>
+  </ul>
+
+  <h2>What I bring</h2>
+  <ul>
+    <li>
+      <strong>Data over vibes</strong> — five years of production systems teach
+      you to measure before you opine. The essays use real prices, real rates.
+    </li>
+    <li>
+      <strong>I ship the prototype myself</strong> — TypeScript, web builds, no
+      waiting for an engineer to make the design question testable.
+    </li>
+    <li>
+      <strong>Systems thinking</strong> — economies, networks, permission
+      models: I already think in interdependent parts. Games are just friendlier
+      graphs.
+    </li>
+  </ul>
+
+  <h2>Now</h2>
+  <p>
+    Pivoting from IT operations toward <strong>game design</strong> — targeting
+    systems/economy design roles in the European live-service scene. Open to
+    junior and mid roles, Munich or remote-friendly.
+  </p>
+
+  <div class="btn-row">
+    <a class="btn" href={`${base}/contact/`}>Get in touch</a>
+    <a class="btn ghost" href={`${base}/writing/`}>Read the essays</a>
+  </div>
+</Layout>

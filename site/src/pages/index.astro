@@ -1,0 +1,82 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+
+const base = import.meta.env.BASE_URL;
+
+const articles = (await getCollection('articles', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+const latest = articles[0];
+---
+
+<Layout title="LluckyGames — game systems, taken apart and built from scratch">
+  <section class="hero">
+    <h1>We take games apart.<br />Then we build them.</h1>
+    <p class="tagline">
+      A game design portfolio by <em>Lluc Sansaloni</em> — essays on live-service
+      economies and playable prototypes of the systems inside them.
+    </p>
+    <div class="btn-row">
+      <a class="btn" href={`${base}/writing/`}>Read the essays</a>
+      <a class="btn ghost" href={`${base}/projects/`}>Play the prototypes</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>Two tracks, one question</h2>
+    <div class="card-grid">
+      <a class="card" href={`${base}/writing/`}>
+        <p class="card-kicker">Writing</p>
+        <h3>How economies try to keep you</h3>
+        <p>
+          Riot's RP bundles that never quite match a skin's price. The WoW Token
+          that legalized a black market. Warframe's player-run platinum economy.
+        </p>
+      </a>
+      <a class="card" href={`${base}/projects/`}>
+        <p class="card-kicker">Prototypes</p>
+        <h3>Rock, paper — with stakes</h3>
+        <p>
+          A combat resolver built on the oldest counter triangle in games: HP,
+          mana, spells, and an AI you can learn to read.
+        </p>
+      </a>
+      <a class="card" href={`${base}/about/`}>
+        <p class="card-kicker">About</p>
+        <h3>Systems person, games heart</h3>
+        <p>
+          Five years keeping production systems alive, a degree in 3D animation
+          and video games, and one pivot: designing the systems players live in.
+        </p>
+      </a>
+    </div>
+  </section>
+
+  {
+    latest && (
+      <section>
+        <h2>Latest writing</h2>
+        <ul class="article-list">
+          <li>
+            <span class="date">
+              {latest.data.pubDate.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                timeZone: 'UTC',
+              })}
+            </span>
+            <h3>
+              <a href={`${base}/writing/${latest.id}/`}>{latest.data.title}</a>
+            </h3>
+            <p>{latest.data.description}</p>
+          </li>
+        </ul>
+        <p>
+          <a href={`${base}/writing/`}>All essays →</a>
+        </p>
+      </section>
+    )
+  }
+</Layout>

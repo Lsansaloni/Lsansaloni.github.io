@@ -1,0 +1,33 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<Layout title="Projects — LluckyGames">
+  <h1>Projects</h1>
+  <p class="muted">
+    Small, complete, playable. Each one exists to answer a design question.
+  </p>
+
+  <div class="card-grid">
+    <a class="card" href={`${base}/projects/rock-paper-magic/`}>
+      <p class="card-kicker">Playable prototype</p>
+      <h3>Rock Paper Magic</h3>
+      <p>
+        Rock-paper-scissors with stakes: HP, mana, spells, and an AI whose
+        patterns you can learn. A combat resolver, not a game — on purpose.
+      </p>
+      <p style="margin-top: 0.8rem"><span class="pill in-progress">In progress</span></p>
+    </a>
+    <div class="card" style="opacity: 0.6">
+      <p class="card-kicker">Next</p>
+      <h3>Slot two</h3>
+      <p>
+        Probably an economy sandbox — a tiny idle game with a currency faucet
+        and sink you can actually break.
+      </p>
+      <p style="margin-top: 0.8rem"><span class="pill planned">Planned</span></p>
+    </div>
+  </div>
+</Layout>

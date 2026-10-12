@@ -1,0 +1,434 @@
+/* LluckyGames — design tokens & base styles */
+
+:root {
+  --bg: #0b0f0e;
+  --bg-raised: #121918;
+  --bg-card: #151d1c;
+  --border: #22302e;
+  --border-strong: #2e403d;
+  --text: #e8efed;
+  --text-muted: #93a8a3;
+  --text-faint: #5f7470;
+  --accent: #34d399;
+  --accent-strong: #6ee7b7;
+  --accent-dim: rgba(52, 211, 153, 0.12);
+  --danger: #f87171;
+  --font-heading: 'Space Grotesk', system-ui, sans-serif;
+  --font-body: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Code', 'JetBrains Mono', Consolas, monospace;
+  --maxw: 720px;
+  --maxw-wide: 960px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 3rem 1.25rem 5rem;
+}
+
+main.wide {
+  max-width: var(--maxw-wide);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: clamp(1.9rem, 4.5vw, 2.6rem);
+  margin: 0 0 0.75rem;
+}
+
+h2 {
+  font-size: 1.45rem;
+  margin: 2.5rem 0 0.75rem;
+}
+
+h3 {
+  font-size: 1.15rem;
+  margin: 2rem 0 0.5rem;
+}
+
+a {
+  color: var(--accent-strong);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+p {
+  margin: 0 0 1rem;
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.faint {
+  color: var(--text-faint);
+}
+
+/* Header */
+
+.site-header {
+  border-bottom: 1px solid var(--border);
+  background: rgba(11, 15, 14, 0.85);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.site-header .inner {
+  max-width: var(--maxw-wide);
+  margin: 0 auto;
+  padding: 0.9rem 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.logo {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.logo:hover {
+  text-decoration: none;
+}
+
+.logo .ll {
+  color: var(--accent);
+}
+
+.logo .games {
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+nav.main-nav {
+  display: flex;
+  gap: 1.4rem;
+}
+
+nav.main-nav a {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+nav.main-nav a:hover,
+nav.main-nav a[aria-current='page'] {
+  color: var(--text);
+  text-decoration: none;
+}
+
+/* Footer */
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 1.5rem 1.25rem;
+  text-align: center;
+  color: var(--text-faint);
+  font-size: 0.85rem;
+}
+
+.site-footer a {
+  color: var(--text-muted);
+}
+
+/* Cards */
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.card {
+  display: block;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.25rem;
+  color: var(--text);
+  transition: border-color 0.15s ease;
+}
+
+.card:hover {
+  border-color: var(--border-strong);
+  text-decoration: none;
+}
+
+.card .card-kicker {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  margin: 0 0 0.5rem;
+}
+
+.card h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1.1rem;
+}
+
+.card p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+/* Article list */
+
+.article-list {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0;
+}
+
+.article-list li {
+  border-bottom: 1px solid var(--border);
+  padding: 1.1rem 0;
+}
+
+.article-list .date {
+  font-size: 0.82rem;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+}
+
+.article-list h3 {
+  margin: 0.25rem 0 0.35rem;
+  font-size: 1.15rem;
+}
+
+.article-list h3 a {
+  color: var(--text);
+}
+
+.article-list h3 a:hover {
+  color: var(--accent-strong);
+}
+
+.article-list p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.93rem;
+}
+
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+}
+
+.tag {
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  color: var(--accent);
+  background: var(--accent-dim);
+  border-radius: 4px;
+  padding: 0.15rem 0.5rem;
+}
+
+/* Prose (article bodies) */
+
+.prose {
+  max-width: var(--maxw);
+}
+
+.prose h2 {
+  border-top: 1px solid var(--border);
+  padding-top: 1.5rem;
+}
+
+.prose blockquote {
+  border-left: 3px solid var(--accent);
+  margin: 1.5rem 0;
+  padding: 0.25rem 0 0.25rem 1.1rem;
+  color: var(--text-muted);
+}
+
+.prose code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+
+.prose pre {
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.prose pre code {
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.92rem;
+}
+
+.prose th,
+.prose td {
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+.prose th {
+  background: var(--bg-raised);
+  font-family: var(--font-heading);
+}
+
+.prose img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.prose hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2rem 0;
+}
+
+/* Buttons */
+
+.btn {
+  display: inline-block;
+  font-family: var(--font-heading);
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 0.55rem 1.2rem;
+  border-radius: 8px;
+  border: 1px solid var(--accent);
+  color: var(--bg);
+  background: var(--accent);
+  transition: background 0.15s ease;
+}
+
+.btn:hover {
+  background: var(--accent-strong);
+  text-decoration: none;
+}
+
+.btn.ghost {
+  background: transparent;
+  color: var(--accent);
+}
+
+.btn.ghost:hover {
+  background: var(--accent-dim);
+}
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1.5rem 0;
+}
+
+/* Hero (home) */
+
+.hero {
+  padding: 2rem 0 1rem;
+}
+
+.hero .tagline {
+  font-family: var(--font-heading);
+  font-size: clamp(1.3rem, 3vw, 1.7rem);
+  color: var(--text-muted);
+  margin: 0 0 1rem;
+  line-height: 1.35;
+}
+
+.hero .tagline em {
+  color: var(--accent);
+  font-style: normal;
+}
+
+/* Status pill (projects) */
+
+.pill {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  color: var(--text-muted);
+}
+
+.pill.in-progress {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: var(--accent-dim);
+}
+
+.pill.planned {
+  color: var(--text-faint);
+}
+
+/* Embed frame for playable builds */
+
+.game-frame {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg-raised);
+  margin: 1.5rem 0;
+}
+
+.game-frame iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 10px;
+}

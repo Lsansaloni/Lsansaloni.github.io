@@ -1,0 +1,77 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  wide?: boolean;
+}
+
+const {
+  title,
+  description = 'LluckyGames — game design portfolio by Lluc Sansaloni. Systems & economies, taken apart and built from scratch.',
+  wide = false,
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL;
+
+const nav = [
+  { href: `${base}/writing/`, label: 'Writing' },
+  { href: `${base}/projects/`, label: 'Projects' },
+  { href: `${base}/about/`, label: 'About' },
+  { href: `${base}/contact/`, label: 'Contact' },
+];
+
+const currentPath = Astro.url.pathname;
+const isCurrent = (href: string) => currentPath.startsWith(href);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="inner">
+        <a href={base + '/'} class="logo">
+          <span class="ll">Ll</span>ucky<span class="games">Games</span>
+        </a>
+        <nav class="main-nav">
+          {
+            nav.map((item) => (
+              <a
+                href={item.href}
+                aria-current={isCurrent(item.href) ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+      </div>
+    </header>
+    <main class={wide ? 'wide' : ''}>
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <p>
+        © 2026 Lluc Sansaloni · <a href={`${base}/about/`}>LluckyGames</a> ·
+        <a href={`${base}/contact/`}>Get in touch</a>
+      </p>
+    </footer>
+  </body>
+</html>

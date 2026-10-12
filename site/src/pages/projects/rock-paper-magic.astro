@@ -1,0 +1,70 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<Layout
+  title="Rock Paper Magic — LluckyGames"
+  description="A combat resolver built on the rock-paper-scissors counter triangle: HP, mana, spells, and an AI you can learn to read."
+>
+  <article class="prose">
+    <header>
+      <p class="faint"><a href={`${base}/projects/`}>← Projects</a></p>
+      <h1>Rock Paper Magic</h1>
+      <p class="muted">
+        Rock-paper-scissors, but every choice has a price and a consequence.
+      </p>
+      <p><span class="pill in-progress">In progress</span></p>
+    </header>
+
+    <div class="game-frame">
+      <p
+        style="display:flex;height:100%;align-items:center;justify-content:center;color:var(--text-faint);font-family:var(--font-mono);font-size:0.9rem;padding:1rem;text-align:center"
+      >
+        Playable build lands here — coming soon.
+      </p>
+    </div>
+
+    <h2>The design question</h2>
+    <p>
+      Pure rock-paper-scissors is a solved, luck-dominated game — there's no
+      skill expression beyond guessing. But add <strong>resources</strong> (HP,
+      mana) and <strong>asymmetric costs</strong> (a spell is stronger than a
+      basic strike but costs mana you regenerate slowly), and the same three
+      counters become a bluffing game with tempo. When do I spend mana? Can I
+      read their pattern before they read mine?
+    </p>
+
+    <h2>Core loop</h2>
+    <ul>
+      <li>Both sides pick an action <em>simultaneously</em> each round.</li>
+      <li>
+        Three basics — <strong>Strike</strong>, <strong>Guard</strong>,
+        <strong>Feint</strong> — in the classic counter triangle, free to play.
+      </li>
+      <li>
+        Two spells with mana costs that break or bend the triangle (e.g. a
+        pierce that ignores Guard, a drain that trades damage for mana).
+      </li>
+      <li>Win the exchange → deal damage. Both survive → mana regenerates.</li>
+      <li>First to zero HP loses. Best-of-5 rounds keeps sessions short.</li>
+    </ul>
+
+    <h2>Scope (deliberately tiny)</h2>
+    <p>
+      This is a <em>combat resolver</em>, not an RPG. No menus, no art — color,
+      text, numbers. The AI has three difficulty behaviors (random, patterned,
+      adaptive) precisely so the player can <em>learn to read it</em>: that
+      readable progression is the actual product.
+    </p>
+
+    <h2>Where it lives</h2>
+    <p>
+      Source in
+      <code>games/rock-paper-magic/</code> (Vite + TypeScript, no engine). The
+      build drops into this page as an iframe — no install, no account, one
+      click to play.
+    </p>
+  </article>
+</Layout>
