@@ -3,15 +3,18 @@ title: "How Riot prices a skin: the quiet math of leftover RP"
 description: "Riot's RP bundles almost — but never quite — match skin prices. That gap isn't an accident, it's the business model. A designer's teardown of premium-currency friction, and what I'd change."
 pubDate: 2026-10-12
 tags: ["economies", "monetization", "league-of-legends"]
-draft: true
+draft: false
 ---
 
 import Aside from '../../components/Aside.astro';
 
-You want a skin. It costs **1350 RP**. You open the store, buy the closest RP
-bundle, and end up with **212 RP you will never spend on anything you
-actually wanted**. Twenty-three days later, you're back in the store — because
-that orphaned balance won't let you forget it.
+You want a skin. It costs **1350 RP**. The smallest bundle that clears it is
+€10.99 for 1380 RP: buy it, get the skin, and keep **30 RP that will never
+become anything you actually wanted**.
+
+Or start the way most people do — two of the little €4.99 bundles — and you're
+holding 1150 RP, which is **200 short**. So you add a third. Now you're 375 RP
+in surplus on a purchase that could have cost €10.99 flat.
 
 Multiply that by a decade of players and a few hundred million purchases, and
 you'll stop calling it an inconvenience. It's the product.
@@ -19,8 +22,8 @@ you'll stop calling it an inconvenience. It's the product.
 This is a designer's teardown of how League of Legends' premium currency
 quietly re-prices everything it touches — not a rant about greed, and not a
 conspiracy theory. Every pattern below is a deliberate, defensible design
-decision. The interesting question isn't whether it's "evil". It's
-**why it works so well**, and what a fairer version would look like.
+decision. The interesting question isn't whether it's "evil". It's **why it
+works so well**, and what a fairer version would look like.
 
 ## One currency is a decision. Two currencies are a business.
 
@@ -50,16 +53,28 @@ bundle denominations are tuned against the skin price tiers.
 
 ## The gap is the product
 
-Here's the mechanism in one sentence: **RP bundles are sized so that no
-single bundle cleanly buys the skin you came for, and no combination of
-bundles leaves you with zero leftover.**
+Here's the mechanism in one sentence: **the bundle ladder and the item ladder
+are two separate tables, and no path between them lands on zero.**
+
+One honest footnote: 13500 RP — the €99.99 bundle — is exactly ten Epic
+skins. It's the single clean hit in the table, and it sits at the top, where a
+player buying their first skin never lands.
 
 {/* prettier-ignore */}
-| What you want | What the store offers | What happens |
+| What you want | The nearest path the store offers | What's left over |
 | --- | --- | --- |
-| A 1350 RP skin | Bundles at awkward sizes around it | You either overshoot into leftover RP, or undershoot and top up again |
-| "Just enough" RP | No exact-match tier exists | The remainder becomes a stored balance — your next trigger |
-| To stop at one purchase | Leftover RP sits in the account | Returning to spend it *feels free* (sunk cost), so you return |
+| A 1350 RP Epic skin | €10.99 → 1380 RP | 30 RP orphaned |
+| The same skin, small bundles only | 2 × €4.99 → 1150 RP | **200 short** → forced third bundle → 375 orphaned |
+| A 1820 RP Legendary | 1380 RP, 440 short — or jump to 2800 | 980 orphaned |
+| A 3250 RP Ultimate | 2800 RP, 450 short — or jump to 4500 | 1250 orphaned — 100 RP *below* the cheapest new skin |
+
+That last row deserves a second read. The change from buying a top-tier skin
+is worth less than the cheapest skin Riot will sell you. The surplus can't buy
+the next thing — it can only wait.
+
+European retail prepaid cards run a third ladder of their own: listings put
+**1240 RP** on the €10 card, where the client sells 1380 for €10.99. "Ten
+euros, how many points?" has two answers — and both of them miss 1350.
 
 Two loops fall out of this, and they reinforce each other:
 
@@ -79,15 +94,23 @@ turns.
 
 ## Anchoring: the tier ladder does the arguing
 
-Skin prices aren't a flat rate — they're a ladder (roughly 575 / 875 / 1350
-/ 1820 / 3250 RP across the classic tiers; verify current values before
-publishing). The ladder isn't cosmetic. It's an anchoring machine:
+Skin prices aren't a flat rate — they're a ladder. Anything new lands at
+**1350 (Epic) / 1820 (Legendary) / 3250 (Ultimate)**; the older 520, 750 and
+975 tiers still sit in the store, but Riot no longer produces them. Above
+Ultimate, the newest systems don't even speak RP: Mythic Essence, Prestige
+rewards, and the Sanctum's Ancient Sparks — 400 RP each, forty for a
+guaranteed pull. The ladder keeps growing rungs the bundle table can't reach.
+
+The ladder isn't cosmetic. It's an anchoring machine:
 
 - The **3250 tier exists** so 1820 feels reasonable. Nobody needs to sell you
   on 1350 — the absurd anchor two rungs up already did the work.
-- **Chromas and lower tiers** absorb the price-sensitive segment without
-  ever touching the mid-tier price. The floor isn't there to be bought; it's
-  there to make the middle look like the deal.
+- **The floor only moves up.** Epic, at 1350, is now the cheapest new skin
+  that can exist; Standard and Budget are retired. Every re-tune raises the
+  bottom rung. None has ever lowered it.
+- **The retired 520–975 tiers and chromas** absorb the price-sensitive
+  segment without ever touching the mid-tier price. The floor isn't there to
+  be bought; it's there to make the middle look like the deal.
 - **Legacy/vault status** on select skins manufactures scarcity on items with
   zero marginal cost to release. The "will it come back?" uncertainty taxes
   patience and rewards immediate purchase — the same FOMO valve, repainted.
@@ -110,13 +133,17 @@ But three changes, none of which require a smaller revenue number:
    and its store survives it. If the skin's value holds up against a direct
    price tag, the direct tag becomes free marketing for the RP path anyway.
 2. **A visible "complete your balance" micro-top-up.** If the leftover is the
-   mechanic, own it: when a player is 200 RP short, offer the exact 200 RP
-   top-up, one click, priced honestly. The loop stays; the frustration — the
-   part that breeds forum resentment and refund pressure — goes.
+   mechanic, own it: when a player is 200 RP short — the exact gap two small
+   bundles leave — offer the exact 200 RP top-up, one click, priced honestly.
+   The loop stays; the frustration — the part that breeds forum resentment and
+   refund pressure — goes.
 3. **One-page price transparency.** €-per-RP by bundle size, published and
-   current. Bundles that reward scale should be *legible* rewards, not
-   puzzles. Players don't rage against premium pricing; they rage against
-   being unable to do the arithmetic.
+   current. The ladder already rewards scale — the €4.99 bundle buys about
+   115 RP per euro, the €99.99 one about 135, roughly 17% more — but you can
+   only learn that by doing arithmetic the store never shows you. Bundles
+   that reward scale should be *legible* rewards, not puzzles. Players don't
+   rage against premium pricing; they rage against being unable to do the
+   arithmetic.
 
 The pattern underneath all three: **keep the economy's power, drop its
 opacity.** Premium currency survives contact with transparency. Leftover RP
@@ -141,11 +168,10 @@ defend in a room full of producers.
 ---
 
 <Aside>
-  **Editor's note — delete before publishing.** Fact-check pass needed:
-  (1) current EUW RP bundle denominations + € prices straight from the store;
-  (2) current default skin price tiers (the 575/875/1350/1820/3250 ladder
-  predates several re-tunes); (3) whether Riot ships any exact-match or
-  micro top-up SKU in any region already; (4) sales cadence (weekly? biweekly?)
-  and what fraction of the catalogue is on rotation. Numbers in this draft are
-  illustrative — the mechanisms are the article, the figures must be live.
+  **Numbers & sources — checked October 2026.** EUW in-client bundles (575 ·
+  €4.99, 1380 · €10.99, 2800 · €21.99, 4500 · €34.99, 6500 · €49.99, 13500 ·
+  €99.99) from the League of Legends Wiki currency tables; skin tiers and the
+  retirement of the Standard/Budget tiers from Riot's price-tier support
+  article and current tier roundups; retail card denominations from European
+  prepaid listings. Prices drift — re-check before citing.
 </Aside>
