@@ -13,8 +13,8 @@
   --accent-strong: #5cf2b3;
   --accent-dim: rgba(0, 230, 138, 0.12);
   --danger: #ff6b6b;
-  --font-heading: 'Space Grotesk', system-ui, sans-serif;
-  --font-body: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Press Start 2P', ui-monospace, monospace;
+  --font-body: 'Roboto', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: ui-monospace, 'Cascadia Code', 'JetBrains Mono', Consolas, monospace;
   --maxw: 740px;
   --maxw-wide: 1200px;
@@ -26,7 +26,7 @@
 
 html {
   background:
-    radial-gradient(1100px 520px at 50% -8%, rgba(0, 230, 138, 0.07), transparent 65%),
+    radial-gradient(1100px 520px at 50% -8%, rgba(0, 230, 138, 0.04), transparent 65%),
     var(--bg);
   background-attachment: fixed;
   color: var(--text);
@@ -58,18 +58,22 @@ main.wide {
   max-width: var(--maxw);
 }
 
-h1,
+h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1rem, 2.4vw, 1.45rem);
+  line-height: 1.6;
+  letter-spacing: 0;
+  margin: 0 0 1rem;
+}
+
 h2,
 h3,
 h4 {
-  font-family: var(--font-heading);
+  font-family: var(--font-body);
+  font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.01em;
-}
-
-h1 {
-  font-size: clamp(2rem, 5vw, 3.1rem);
-  margin: 0 0 0.75rem;
 }
 
 h2 {
@@ -125,11 +129,11 @@ p {
 }
 
 .logo {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 1.15rem;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(0.6rem, 2vw, 0.75rem);
   color: var(--text);
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
 }
 
 .logo:hover {
@@ -188,7 +192,7 @@ nav.main-nav a[aria-current='page'] {
   display: block;
   background: var(--bg-card);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 6px;
   padding: 1.4rem 1.5rem;
   color: var(--text);
   transition:
@@ -282,11 +286,6 @@ nav.main-nav a[aria-current='page'] {
   max-width: var(--maxw);
 }
 
-.prose h2 {
-  border-top: 1px solid var(--border);
-  padding-top: 1.5rem;
-}
-
 .prose blockquote {
   border-left: 3px solid var(--accent);
   margin: 1.5rem 0;
@@ -333,7 +332,8 @@ nav.main-nav a[aria-current='page'] {
 
 .prose th {
   background: var(--bg-raised);
-  font-family: var(--font-heading);
+  font-family: var(--font-body);
+  font-weight: 700;
 }
 
 .prose img {
@@ -342,20 +342,18 @@ nav.main-nav a[aria-current='page'] {
 }
 
 .prose hr {
-  border: none;
-  border-top: 1px solid var(--border);
-  margin: 2rem 0;
+  display: none;
 }
 
 /* Buttons */
 
 .btn {
   display: inline-block;
-  font-family: var(--font-heading);
+  font-family: var(--font-body);
   font-weight: 500;
   font-size: 0.95rem;
   padding: 0.55rem 1.2rem;
-  border-radius: 8px;
+  border-radius: 4px;
   border: 1px solid var(--accent);
   color: var(--bg);
   background: var(--accent);
@@ -390,8 +388,8 @@ nav.main-nav a[aria-current='page'] {
 }
 
 .hero .tagline {
-  font-family: var(--font-heading);
-  font-size: clamp(1.35rem, 3vw, 1.85rem);
+  font-family: var(--font-body);
+  font-size: clamp(1.2rem, 2.6vw, 1.6rem);
   color: var(--text-muted);
   margin: 0 0 1.25rem;
   line-height: 1.35;
@@ -433,7 +431,7 @@ nav.main-nav a[aria-current='page'] {
   width: 100%;
   aspect-ratio: 16 / 10;
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: 4px;
   background: var(--bg-raised);
   margin: 1.5rem 0;
 }
@@ -442,5 +440,5 @@ nav.main-nav a[aria-current='page'] {
   width: 100%;
   height: 100%;
   border: none;
-  border-radius: 10px;
+  border-radius: 4px;
 }
